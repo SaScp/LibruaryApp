@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Peoples</title>
+</head>
+<body>
+<h2>Users</h2>
+<div th:each="person : ${people}">
+    <a th:text="${person.getName() + ' , ' + person.getYear_born()}" ></a>
+</div>
+</body>
+</html>
