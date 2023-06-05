@@ -5,6 +5,11 @@
     <title>info about user</title>
 </head>
 <body>
-
+<p th:text="${dataAboutUser.getName()}"/>
+<p th:text="${dataAboutUser.getYear_born()}"/>
+<p th:if="${dataAboutUser.getBooks().isEmpty()}">The man has not yet taken a single book</p>
+<p th:each="book : ${dataAboutUser.getBooks()}" th:if="${!dataAboutUser.getBooks().isEmpty()}">
+    <a th:href="@{/book/{id}(id=${book.getId()})}"  th:text="${book.getName()}"/>
+</p>
 </body>
 </html>

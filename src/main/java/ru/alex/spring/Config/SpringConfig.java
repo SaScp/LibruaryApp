@@ -31,7 +31,7 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    DataSource dataSource(){
+    DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("driver"));
         dataSource.setUrl(environment.getProperty("url"));
@@ -39,12 +39,13 @@ public class SpringConfig implements WebMvcConfigurer {
         dataSource.setPassword(environment.getProperty("password"));
         return dataSource;
     }
+
     @Bean
     JdbcTemplate jdbcTemplate(){
         return new JdbcTemplate(dataSource());
     }
     @Bean
-    public SpringResourceTemplateResolver templateResolver(){
+    public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/view/");
@@ -52,7 +53,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return templateResolver;
     }
     @Bean
-    public SpringTemplateEngine templateEngine(){
+    public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);

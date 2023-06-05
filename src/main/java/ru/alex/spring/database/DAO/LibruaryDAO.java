@@ -1,4 +1,4 @@
-package ru.alex.spring.DAO;
+package ru.alex.spring.database.DAO;
 
 import ru.alex.spring.models.Book;
 import ru.alex.spring.models.Person;

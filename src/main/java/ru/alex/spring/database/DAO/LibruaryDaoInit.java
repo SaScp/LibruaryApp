@@ -1,4 +1,4 @@
-package ru.alex.spring.DAO;
+package ru.alex.spring.database.DAO;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,15 +47,22 @@ public class LibruaryDaoInit implements LibruaryDAO{
     }
 
     public void deleteBook(Book book) {
-
     }
 
     public Person showPersonInfo(int id) {
-        return jdbcTemplate.query("select * from Person",
-                new BeanPropertyRowMapper<>(Person.class))
+        Person person = jdbcTemplate.query("select * from Person",
+                        new BeanPropertyRowMapper<>(Person.class))
                 .stream().filter(user -> user.getId() == id)
                 .findAny()
                 .orElse(null);
+        person.setBooks(ShowBookUsers(id));
+        return person;
+    }
+    public List<Book> ShowBookUsers(int user_id){
+        return jdbcTemplate.query("select * from book", new BeanPropertyRowMapper<>(Book.class))
+                .stream().
+                filter(book -> book.getUser_id() == user_id)
+                .toList();
     }
 
     public Book showBookInfo(int id) {
@@ -65,7 +72,6 @@ public class LibruaryDaoInit implements LibruaryDAO{
                 .findAny()
                 .orElse(null);
     }
-
     public List<Person> indexPersons() {
         return jdbcTemplate.query("select * from person",
                 new BeanPropertyRowMapper<>(Person.class));
