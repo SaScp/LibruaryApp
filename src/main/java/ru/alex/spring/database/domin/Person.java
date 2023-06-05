@@ -5,14 +5,14 @@ import java.util.List;
 
 
 public class Person {
-    private int id;
+    private Integer id;
     private String name;
-    private int year_born;
+    private Integer year_born;
 
     private List<Book> books = new ArrayList<>();
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -24,7 +24,7 @@ public class Person {
         this.books = books;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -36,11 +36,11 @@ public class Person {
         this.name = name;
     }
 
-    public int getYear_born() {
+    public Integer getYear_born() {
         return year_born;
     }
 
-    public void setYear_born(int year_born) {
+    public void setYear_born(Integer year_born) {
         this.year_born = year_born;
     }
 }

@@ -21,32 +21,36 @@ public class UserLibraryDAO implements ILibruaryDAO<Person> {
     }
 
     @Override
-    public void update(Person updateObject, int id) {
-        jdbcTemplate.update("update person set name=?, year_born=? where user_id = id",
+    public void update(Person updateObject, Integer id) {
+        jdbcTemplate.update("update person set name=?, year_born=? where id = ?",
                 updateObject.getName(),
-                updateObject.getYear_born());
+                updateObject.getYear_born(),
+                id);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         jdbcTemplate.update("delete from person where id=?", id);
     }
 
     @Override
-    public Person showInfo(int id) {
+    public Person showInfo(Integer id) {
         Person person = jdbcTemplate.query("select * from Person",
                         new BeanPropertyRowMapper<>(Person.class))
                 .stream().filter(user -> user.getId() == id)
                 .findAny()
                 .orElse(null);
         person.setBooks(ShowBookUsers(id));
+        System.out.println(person.getBooks());
         return person;
     }
-    public List<Book> ShowBookUsers(int user_id){
-        return jdbcTemplate.query("select * from book", new BeanPropertyRowMapper<>(Book.class))
+    public List<Book> ShowBookUsers(Integer user_id){
+        List<Book> books =jdbcTemplate.query("select * from book ", new BeanPropertyRowMapper<>(Book.class))
                 .stream().
                 filter(book -> book.getUser_id() == user_id)
                 .toList();
+        System.out.println(books);
+        return books;
     }
     @Override
     public List<Person> index() {

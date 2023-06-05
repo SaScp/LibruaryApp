@@ -11,5 +11,13 @@
 <p th:each="book : ${dataAboutUser.getBooks()}" th:if="${!dataAboutUser.getBooks().isEmpty()}">
     <a th:href="@{/book/{id}(id=${book.getId()})}"  th:text="${book.getName()}"/>
 </p>
+
+<form method="get" th:action="@{/user/{id}/editUser(id=${dataAboutUser.getId()})}">
+    <input type="submit" value="update">
+</form>
+
+<form th:method="DELETE" th:action="@{/user/{id}(id=${dataAboutUser.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
 </body>
 </html>

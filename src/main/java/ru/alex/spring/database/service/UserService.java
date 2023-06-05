@@ -19,17 +19,17 @@ public class UserService implements IService<Person>{
     }
 
     @Override
-    public void update(Person updateObject, int id) {
+    public void update(Person updateObject, Integer id) {
         iLibruaryDAO.update(updateObject, id);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         iLibruaryDAO.delete(id);
     }
 
     @Override
-    public Person showInfo(int id) {
+    public Person showInfo(Integer id) {
         return iLibruaryDAO.showInfo(id);
     }
 

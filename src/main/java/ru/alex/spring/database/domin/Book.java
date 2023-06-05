@@ -1,25 +1,25 @@
 package ru.alex.spring.database.domin;
 
 public class Book {
-    private int id;
-    private int user_id;
+    private Integer id;
+    private Integer user_id;
     private String name;
     private String autor;
-    private int year_relese;
+    private Integer year_relese;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 
@@ -39,11 +39,11 @@ public class Book {
         this.autor = autor;
     }
 
-    public int getYear_relese() {
+    public Integer getYear_relese() {
         return year_relese;
     }
 
-    public void setYear_relese(int year_relese) {
+    public void setYear_relese(Integer year_relese) {
         this.year_relese = year_relese;
     }
 }

@@ -22,20 +22,21 @@ public class BookLibraryDAO implements ILibruaryDAO<Book> {
     }
 
     @Override
-    public void update(Book updateObject, int id) {
-        jdbcTemplate.update("update book set name=?, autor=?,year_relese=? where book_id=id",
+    public void update(Book updateObject, Integer id) {
+        jdbcTemplate.update("update book set name=?, autor=?,year_relese=? where book_id=?",
                 updateObject.getName(),
                 updateObject.getAutor(),
-                updateObject.getYear_relese());
+                updateObject.getYear_relese(),
+                id);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         jdbcTemplate.update("delete from book where id=?", id);
     }
 
     @Override
-    public Book showInfo(int id) {
+    public Book showInfo(Integer id) {
         return jdbcTemplate.query("select * from book",
                         new BeanPropertyRowMapper<>(Book.class))
                 .stream().filter(book -> book.getId() == id)

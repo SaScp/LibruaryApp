@@ -19,17 +19,17 @@ public class BookService implements IService<Book>{
     }
 
     @Override
-    public void update(Book updateObject, int id) {
+    public void update(Book updateObject, Integer id) {
         iLibruaryDAO.update(updateObject, id);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         iLibruaryDAO.delete(id);
     }
 
     @Override
-    public Book showInfo(int id) {
+    public Book showInfo(Integer id) {
         return  iLibruaryDAO.showInfo(id);
     }
 

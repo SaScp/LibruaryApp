@@ -8,5 +8,12 @@
 <h2 th:text="${dataAboutBook.getName()}"/>
 <p th:text="${dataAboutBook.getAutor()}"/>
 <p th:text="${dataAboutBook.getYear_relese()}"/>
+<form method="get" th:action="@{/book/{id}/editUser(id=${dataAboutBook.getId()})}">
+  <input type="submit" value="update">
+</form>
+
+<form th:method="DELETE" th:action="@{/book/{id}(id=${dataAboutBook.getId()})}">
+  <input type="submit" value="Delete"/>
+</form>
 </body>
 </html>

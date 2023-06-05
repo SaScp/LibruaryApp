@@ -7,7 +7,7 @@ import ru.alex.spring.database.service.IService;
 import ru.alex.spring.database.domin.Person;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
   private final IService<Person> personIService;
 
@@ -32,12 +32,29 @@ public class UserController {
     }
 
     @GetMapping("/addUser")
-    public String addUser(@ModelAttribute("dataAboutUser") Person person) {
+    public String addUser(Model model) {
+        model.addAttribute("dataAboutUser", new Person());
         return "people/addUser";
     }
+
     @PostMapping("/add")
     public String add(@ModelAttribute("dataAboutUser") Person person) {
         personIService.save(person);
-        return "redirect:/users";
+        return "redirect:/user/users";
+    }
+    @GetMapping("/{id}/editUser")
+    public String editUser(Model model, @PathVariable("id") int id){
+        model.addAttribute("dataAboutUser", personIService.showInfo(id));
+        return "people/edit";
+    }
+    @PatchMapping("/{id}")
+    public String edit(@ModelAttribute("dataAboutUser") Person person, @PathVariable("id") int id){
+        personIService.update(person, id);
+        return "redirect:/user/users";
+    }
+    @DeleteMapping("/{id}")
+    public String deleteUser(@ModelAttribute("dataAboutUser") Person person,@PathVariable("id") int id){
+        personIService.delete(id);
+        return "redirect:/user/users";
     }
 }

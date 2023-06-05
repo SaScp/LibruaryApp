@@ -2,9 +2,8 @@ package ru.alex.spring.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.alex.spring.database.domin.Person;
 import ru.alex.spring.database.service.IService;
 import ru.alex.spring.database.domin.Book;
 
@@ -26,5 +25,31 @@ public class BookController {
     public String showInfoAboutBook(@PathVariable int id, Model model) {
         model.addAttribute("dataAboutBook",bookIService.showInfo(id));
         return "book/show";
+    }
+    @GetMapping("/addBook")
+    public String addUser(Model model) {
+        model.addAttribute("dataAboutBook", new Book());
+        return "book/addBook";
+    }
+
+    @PostMapping("/add")
+    public String add(@ModelAttribute("dataAboutBook") Book book) {
+        bookIService.save(book);
+        return "redirect:/user/users";
+    }
+    @GetMapping("/{id}/editUser")
+    public String editUser(Model model, @PathVariable("id") int id){
+        model.addAttribute("dataAboutBook", bookIService.showInfo(id));
+        return "book/edit";
+    }
+    @PatchMapping("/{id}")
+    public String edit(@ModelAttribute("dataAboutBook") Book book, @PathVariable("id") int id){
+        bookIService.update(book, id);
+        return "redirect:/user/users";
+    }
+    @DeleteMapping("/{id}")
+    public String deleteUser(@ModelAttribute("dataAboutBook") Book book,@PathVariable("id") int id){
+        bookIService.delete(id);
+        return "redirect:/user/users";
     }
 }
