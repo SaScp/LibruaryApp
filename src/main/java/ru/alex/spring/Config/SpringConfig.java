@@ -29,14 +29,20 @@ public class SpringConfig implements WebMvcConfigurer {
         this.applicationContext = applicationContext;
         this.environment = environment;
     }
-
+    /*
+    * Create Table in PostgreSQL with param:
+    * in book: id int(with auto increment), user_id int(fk), name varchar unique, autor varchar, year_relese
+    * in person: id int(with auto increment), name varchar unique, year_born
+    */
     @Bean
     DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
         dataSource.setDriverClassName(environment.getProperty("driver"));
         dataSource.setUrl(environment.getProperty("url"));
+
         dataSource.setUsername(environment.getProperty("username_value"));
-        dataSource.setPassword(environment.getProperty("password"));
+        dataSource.setPassword(environment.getProperty("password_value"));
         return dataSource;
     }
 
@@ -46,23 +52,30 @@ public class SpringConfig implements WebMvcConfigurer {
     }
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
+
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
+
         templateResolver.setPrefix("/WEB-INF/view/");
         templateResolver.setSuffix(".html");
+
         return templateResolver;
     }
     @Bean
     public SpringTemplateEngine templateEngine() {
+
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);
+
         return templateEngine;
     }
 
     public void configureViewResolvers(ViewResolverRegistry registry) {
+
         ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
         thymeleafViewResolver.setTemplateEngine(templateEngine());
+
         registry.viewResolver(thymeleafViewResolver);
     }
 }

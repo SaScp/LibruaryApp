@@ -1,4 +1,4 @@
-package ru.alex.spring.models;
+package ru.alex.spring.database.domin;
 
 public class Book {
     private int id;
@@ -7,14 +7,6 @@ public class Book {
     private String autor;
     private int year_relese;
 
-    public Book(int id, int user_id, String name, String autor, int year_relese) {
-        this.id = id;
-        this.user_id = user_id;
-        this.name = name;
-        this.autor = autor;
-        this.year_relese = year_relese;
-    }
-public Book(){}
     public int getId() {
         return id;
     }

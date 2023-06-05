@@ -1,6 +1,4 @@
-package ru.alex.spring.models;
-
-import org.springframework.stereotype.Component;
+package ru.alex.spring.database.domin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +10,7 @@ public class Person {
     private int year_born;
 
     private List<Book> books = new ArrayList<>();
-    public Person(String name, int year_born, int id) {
-        this.name = name;
-        this.year_born = year_born;
-        this.id = id;
-    }
-    public Person(){}
+
 
     public int getId() {
         return id;
