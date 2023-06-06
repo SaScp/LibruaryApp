@@ -1,11 +1,14 @@
 package ru.alex.spring.database.domin;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Person {
     private Integer id;
+    @NotEmpty(message = "Пожалуйста впешите имя!")
     private String name;
     private Integer year_born;
 

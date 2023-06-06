@@ -5,11 +5,11 @@
     <title>Start Page</title>
 </head>
 <body>
-<form th:action="@{/users}">
-  <button type="button">Users</button>
+<form th:action="@{user/users}" method="get">
+  <button type="submit">Пользователи</button>
 </form>
-<form th:action="@{/books}">
-  <button type="submit">Books</button>
+<form th:action="@{/book/books}" method="get">
+  <button type="submit">Книги</button>
 </form>
 </body>
 </html>

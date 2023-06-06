@@ -2,23 +2,24 @@ package ru.alex.spring.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.alex.spring.database.service.IService;
 import ru.alex.spring.database.domin.Person;
+import ru.alex.spring.unil.PersonValidator;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
   private final IService<Person> personIService;
-
-    public UserController(IService<Person> personIService) {
+  private final PersonValidator personValidator;
+    public UserController(IService<Person> personIService, PersonValidator personValidator) {
         this.personIService = personIService;
+        this.personValidator = personValidator;
     }
 
-    @GetMapping("/none") //PODO закончю позже
-    public String startPage(){
-        return "StartPage";
-    }
     @GetMapping("/users")
     public String indexUser(Model model) {
         model.addAttribute("people",personIService.index());
@@ -38,7 +39,10 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("dataAboutUser") Person person) {
+    public String add(@ModelAttribute("dataAboutUser") @Valid Person person, BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
+        if (bindingResult.hasErrors())
+            return "people/addUser";
         personIService.save(person);
         return "redirect:/user/users";
     }
@@ -49,7 +53,7 @@ public class UserController {
     }
     @PatchMapping("/{id}")
     public String edit(@ModelAttribute("dataAboutUser") Person person, @PathVariable("id") int id){
-        personIService.update(person, id);
+        personIService.update(person , id, "update");
         return "redirect:/user/users";
     }
     @DeleteMapping("/{id}")

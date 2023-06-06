@@ -1,5 +1,7 @@
 package ru.alex.spring.database.domin;
 
+import javax.validation.constraints.NotNull;
+
 public class Book {
     private Integer id;
     private Integer user_id;

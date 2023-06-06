@@ -3,6 +3,7 @@ package ru.alex.spring.database.service;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.alex.spring.database.DAO.ILibruaryDAO;
+import ru.alex.spring.database.domin.Book;
 import ru.alex.spring.database.domin.Person;
 
 import java.util.List;
@@ -19,9 +20,13 @@ public class UserService implements IService<Person>{
     }
 
     @Override
-    public void update(Person updateObject, Integer id) {
-        iLibruaryDAO.update(updateObject, id);
+    public void update(Object data, Integer id, String actions) {
+        iLibruaryDAO.update(data, id, actions);
     }
+
+  /*  public void update(Person updateObject, Integer id) {
+        iLibruaryDAO.update(updateObject, id);
+    }*/
 
     @Override
     public void delete(Integer id) {

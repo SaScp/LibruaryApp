@@ -7,6 +7,8 @@ import ru.alex.spring.database.domin.Book;
 import ru.alex.spring.database.domin.Person;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public class UserLibraryDAO implements ILibruaryDAO<Person> {
     private final JdbcTemplate jdbcTemplate;
@@ -21,10 +23,13 @@ public class UserLibraryDAO implements ILibruaryDAO<Person> {
     }
 
     @Override
-    public void update(Person updateObject, Integer id) {
+    public void update(Object data, Integer id, String actions) {
+        Person person = null;
+        if(data instanceof Person)
+            person = (Person) data;
         jdbcTemplate.update("update person set name=?, year_born=? where id = ?",
-                updateObject.getName(),
-                updateObject.getYear_born(),
+                person.getName(),
+                person.getYear_born(),
                 id);
     }
 
@@ -56,5 +61,9 @@ public class UserLibraryDAO implements ILibruaryDAO<Person> {
     public List<Person> index() {
         return jdbcTemplate.query("select * from person",
                 new BeanPropertyRowMapper<>(Person.class));
+    }
+    public Optional<Person> getPersonByFullName(String fullName) {
+        return jdbcTemplate.query("SELECT * FROM person WHERE name=?", new Object[]{fullName},
+                new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
     }
 }

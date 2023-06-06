@@ -6,13 +6,15 @@
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/user/{id}(id=${dataAboutUser.getId()})}" th:object="${dataAboutUser}">
-  <label for="name">name</label>
-  <input  type="text" th:field="*{name}" id="name">
-  <Br>
-  <label for="year_born">year_born</label>
-  <input  type="text" th:field="*{year_born}" id="year_born">
-  <Br>
-  <button type="submit">add</button>
+    <label for="name">Введите имя</label>
+    <input  type="text" th:field="*{name}" id="name">
+    <br>
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</div>
+    <Br>
+    <label for="year_born">Введите год рождения</label>
+    <input  type="text" th:field="*{year_born}" id="year_born">
+    <Br>
+    <button type="submit">обновить</button>
 </form>
 </body>
 </html>
