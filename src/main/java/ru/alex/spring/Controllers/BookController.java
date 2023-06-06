@@ -10,6 +10,7 @@ import ru.alex.spring.database.domin.Book;
 @Controller
 @RequestMapping("book")
 public class BookController {
+
     private final IService<Book> bookIService;
     private final IService<Person> userIService;
     public BookController(IService<Book> bookIService, IService<Person> userIService) {
@@ -51,17 +52,17 @@ public class BookController {
         return "redirect:/book/books";
     }
     @GetMapping("/{id}/editUser")
-    public String editUser(Model model, @PathVariable("id") int id){
+    public String editUser(Model model, @PathVariable("id") int id) {
         model.addAttribute("dataAboutBook", bookIService.showInfo(id));
         return "book/edit";
     }
     @PatchMapping("/{id}")
-    public String edit(@ModelAttribute("dataAboutBook") Book book, @PathVariable("id") int id){
+    public String edit(@ModelAttribute("dataAboutBook") Book book, @PathVariable("id") int id) {
         bookIService.update(book, id, "update");
         return "redirect:/book/books";
     }
     @DeleteMapping("/{id}")
-    public String deleteUser(@ModelAttribute("dataAboutBook") Book book,@PathVariable("id") int id){
+    public String deleteUser(@ModelAttribute("dataAboutBook") Book book, @PathVariable("id") int id) {
         bookIService.delete(id);
         return "redirect:/book/books";
     }

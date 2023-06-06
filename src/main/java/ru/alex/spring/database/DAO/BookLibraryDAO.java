@@ -44,6 +44,7 @@ public class BookLibraryDAO implements ILibruaryDAO<Book> {
             case "updateNull" -> jdbcTemplate.update("update book set user_id=null where id=?", id);
         }
     }
+
     @Override
     public void delete(Integer id) {
         jdbcTemplate.update("delete from book where id=?", id);

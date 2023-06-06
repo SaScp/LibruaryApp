@@ -46,15 +46,16 @@ public class UserLibraryDAO implements ILibruaryDAO<Person> {
                 .findAny()
                 .orElse(null);
         person.setBooks(ShowBookUsers(id));
-        System.out.println(person.getBooks());
+
         return person;
     }
     public List<Book> ShowBookUsers(Integer user_id){
-        List<Book> books =jdbcTemplate.query("select * from book ", new BeanPropertyRowMapper<>(Book.class))
+        List<Book> books =jdbcTemplate.query("select * from book ",
+                        new BeanPropertyRowMapper<>(Book.class))
                 .stream().
                 filter(book -> book.getUser_id() == user_id)
                 .toList();
-        System.out.println(books);
+
         return books;
     }
     @Override
