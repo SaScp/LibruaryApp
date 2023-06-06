@@ -31,8 +31,18 @@ public class SpringConfig implements WebMvcConfigurer {
     }
     /*
     * Create Table in PostgreSQL with param:
-    * in book: id int(with auto increment), user_id int(fk), name varchar unique, autor varchar, year_relese
-    * in person: id int(with auto increment), name varchar unique, year_born
+    * ----------------------------------------------------------
+    * in book:
+    * id int(with auto increment),
+    * user_id int(fk with id in person and cascade -- (on delete set null)),
+    *  name varchar unique,
+    * autor varchar not null,
+    * year_relese not null
+    * --------------------------------------------------------
+    * in person:
+    * id int(with auto increment),
+    * name varchar not null unique,
+    * year_born not null
     */
     @Bean
     DataSource dataSource() {
