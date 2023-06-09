@@ -27,7 +27,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String ShowInfoAboutUser(@PathVariable("id") int id, Model model) {
+    public String ShowInfoAboutUser(@PathVariable("id") int id,
+                                    Model model) {
         model.addAttribute("dataAboutUser",personIService.showInfo(id));
          return "people/show";
     }
@@ -39,7 +40,8 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("dataAboutUser") @Valid Person person, BindingResult bindingResult) {
+    public String add(@ModelAttribute("dataAboutUser") @Valid Person person,
+                      BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors())
             return "people/addUser";
@@ -47,17 +49,20 @@ public class UserController {
         return "redirect:/user/users";
     }
     @GetMapping("/{id}/editUser")
-    public String editUser(Model model, @PathVariable("id") int id) {
+    public String editUser(Model model,
+                           @PathVariable("id") int id) {
         model.addAttribute("dataAboutUser", personIService.showInfo(id));
         return "people/edit";
     }
     @PatchMapping("/{id}")
-    public String edit(@ModelAttribute("dataAboutUser") Person person, @PathVariable("id") int id) {
+    public String edit(@ModelAttribute("dataAboutUser") Person person,
+                       @PathVariable("id") int id) {
         personIService.update(person, id, "update");
         return "redirect:/user/users";
     }
     @DeleteMapping("/{id}")
-    public String deleteUser(@ModelAttribute("dataAboutUser") Person person, @PathVariable("id") int id) {
+    public String deleteUser(@ModelAttribute("dataAboutUser") Person person,
+                             @PathVariable("id") int id) {
         personIService.delete(id);
         return "redirect:/user/users";
     }

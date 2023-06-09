@@ -24,19 +24,24 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String showInfoAboutBook(@PathVariable int id, Model model,Model userModel,  @ModelAttribute("person") Person person) {
+    public String showInfoAboutBook(@PathVariable int id,
+                                    Model model,
+                                    Model userModel,
+                                    @ModelAttribute("person") Person person) {
         model.addAttribute("dataAboutBook",bookIService.showInfo(id));
         userModel.addAttribute("people", userIService.index());
         return "book/show";
     }
 
     @PatchMapping("/updateId/{id}")
-    public String updateAction(@PathVariable("id") Integer id,  @ModelAttribute("person") Person person){
+    public String updateAction(@PathVariable("id") Integer id,
+                               @ModelAttribute("person") Person person){
         bookIService.update(person, id, "updateId");
         return "redirect:/book/{id}";
     }
     @PatchMapping("/updateNull/{id}")
-    public String updateNullAction(@PathVariable("id") Integer id,  @ModelAttribute("person") Person person){
+    public String updateNullAction(@PathVariable("id") Integer id,
+                                   @ModelAttribute("person") Person person) {
         bookIService.update(person, id, "updateNull");
         return "redirect:/book/{id}";
     }
@@ -52,17 +57,20 @@ public class BookController {
         return "redirect:/book/books";
     }
     @GetMapping("/{id}/editUser")
-    public String editUser(Model model, @PathVariable("id") int id) {
+    public String editUser(Model model,
+                           @PathVariable("id") int id) {
         model.addAttribute("dataAboutBook", bookIService.showInfo(id));
         return "book/edit";
     }
     @PatchMapping("/{id}")
-    public String edit(@ModelAttribute("dataAboutBook") Book book, @PathVariable("id") int id) {
+    public String edit(@ModelAttribute("dataAboutBook") Book book,
+                       @PathVariable("id") int id) {
         bookIService.update(book, id, "update");
         return "redirect:/book/books";
     }
     @DeleteMapping("/{id}")
-    public String deleteUser(@ModelAttribute("dataAboutBook") Book book, @PathVariable("id") int id) {
+    public String deleteUser(@ModelAttribute("dataAboutBook") Book book,
+                             @PathVariable("id") int id) {
         bookIService.delete(id);
         return "redirect:/book/books";
     }

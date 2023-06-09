@@ -31,8 +31,11 @@ public class BookLibraryDAO implements ILibruaryDAO<Book> {
         else
             book = (Book) data;
 
-        switch (actions){
-            case "update"->jdbcTemplate.update("update book set name=?, autor=?,year_relese=? where book_id=?",
+        switch (actions) {
+            case "update"->jdbcTemplate.update("update book set " +
+                            "name=?, " +
+                            "autor=?, " +
+                            "year_relese=? where book_id=?",
                     book.getName(),
                     book.getAutor(),
                     book.getYear_relese(),

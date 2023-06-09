@@ -49,7 +49,7 @@ public class UserLibraryDAO implements ILibruaryDAO<Person> {
 
         return person;
     }
-    public List<Book> ShowBookUsers(Integer user_id){
+    public List<Book> ShowBookUsers(Integer user_id) {
         List<Book> books =jdbcTemplate.query("select * from book ",
                         new BeanPropertyRowMapper<>(Book.class))
                 .stream().
