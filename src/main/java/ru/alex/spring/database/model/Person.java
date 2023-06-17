@@ -1,7 +1,6 @@
-package ru.alex.spring.database.domin;
+package ru.alex.spring.database.model;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 

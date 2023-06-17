@@ -3,17 +3,18 @@ package ru.alex.spring.Controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.alex.spring.database.domin.Person;
-import ru.alex.spring.database.service.IService;
-import ru.alex.spring.database.domin.Book;
+import ru.alex.spring.database.DAO.BookLibraryDAO;
+import ru.alex.spring.database.DAO.UserLibraryDAO;
+import ru.alex.spring.database.model.Person;
+import ru.alex.spring.database.model.Book;
 
 @Controller
 @RequestMapping("book")
 public class BookController {
 
-    private final IService<Book> bookIService;
-    private final IService<Person> userIService;
-    public BookController(IService<Book> bookIService, IService<Person> userIService) {
+    private final BookLibraryDAO bookIService;
+    private final UserLibraryDAO userIService;
+    public BookController(BookLibraryDAO bookIService, UserLibraryDAO userIService) {
         this.bookIService = bookIService;
         this.userIService = userIService;
     }

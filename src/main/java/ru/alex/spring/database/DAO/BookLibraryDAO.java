@@ -3,18 +3,18 @@ package ru.alex.spring.database.DAO;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.alex.spring.database.domin.Book;
-import ru.alex.spring.database.domin.Person;
+import ru.alex.spring.database.model.Book;
+import ru.alex.spring.database.model.Person;
 
 import java.util.List;
 @Repository
-public class BookLibraryDAO implements ILibruaryDAO<Book> {
+public class BookLibraryDAO {
     private final JdbcTemplate jdbcTemplate;
 
     public BookLibraryDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    @Override
+
     public void save(Book newObject) {
         jdbcTemplate.update("insert into book(name, autor, year_relese) values (?,?,?)",
                 newObject.getName(),
@@ -22,7 +22,7 @@ public class BookLibraryDAO implements ILibruaryDAO<Book> {
                 newObject.getYear_relese());
     }
 
-    @Override
+
     public void update(Object data, Integer id, String actions) {
         Person person = null;
         Book book = null;
@@ -48,12 +48,12 @@ public class BookLibraryDAO implements ILibruaryDAO<Book> {
         }
     }
 
-    @Override
+
     public void delete(Integer id) {
         jdbcTemplate.update("delete from book where id=?", id);
     }
 
-    @Override
+
     public Book showInfo(Integer id) {
         return jdbcTemplate.query("select * from book",
                         new BeanPropertyRowMapper<>(Book.class))
@@ -62,7 +62,7 @@ public class BookLibraryDAO implements ILibruaryDAO<Book> {
                 .orElse(null);
     }
 
-    @Override
+
     public List<Book> index() {
         return jdbcTemplate.query("select * from book",
                 new BeanPropertyRowMapper<>(Book.class));

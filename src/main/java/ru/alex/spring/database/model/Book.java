@@ -1,6 +1,4 @@
-package ru.alex.spring.database.domin;
-
-import javax.validation.constraints.NotNull;
+package ru.alex.spring.database.model;
 
 public class Book {
     private Integer id;

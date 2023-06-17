@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.alex.spring.database.DAO.UserLibraryDAO;
-import ru.alex.spring.database.domin.Person;
+import ru.alex.spring.database.model.Person;
 
 
 /**

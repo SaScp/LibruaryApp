@@ -3,26 +3,26 @@ package ru.alex.spring.database.DAO;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.alex.spring.database.domin.Book;
-import ru.alex.spring.database.domin.Person;
+import ru.alex.spring.database.model.Book;
+import ru.alex.spring.database.model.Person;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserLibraryDAO implements ILibruaryDAO<Person> {
+public class UserLibraryDAO{
     private final JdbcTemplate jdbcTemplate;
 
     public UserLibraryDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    @Override
+
     public void save(Person newObject) {
         jdbcTemplate.update("insert into person(name, year_born) values (?, ?)",
                 newObject.getName(), newObject.getYear_born());
     }
 
-    @Override
+
     public void update(Object data, Integer id, String actions) {
         Person person = null;
         if(data instanceof Person)
@@ -33,12 +33,12 @@ public class UserLibraryDAO implements ILibruaryDAO<Person> {
                 id);
     }
 
-    @Override
+
     public void delete(Integer id) {
         jdbcTemplate.update("delete from person where id=?", id);
     }
 
-    @Override
+
     public Person showInfo(Integer id) {
         Person person = jdbcTemplate.query("select * from Person",
                         new BeanPropertyRowMapper<>(Person.class))
@@ -58,7 +58,7 @@ public class UserLibraryDAO implements ILibruaryDAO<Person> {
 
         return books;
     }
-    @Override
+
     public List<Person> index() {
         return jdbcTemplate.query("select * from person",
                 new BeanPropertyRowMapper<>(Person.class));

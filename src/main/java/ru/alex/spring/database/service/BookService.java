@@ -1,46 +1,35 @@
 package ru.alex.spring.database.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.alex.spring.database.DAO.ILibruaryDAO;
-import ru.alex.spring.database.domin.Book;
-import ru.alex.spring.database.domin.Person;
+import ru.alex.spring.database.DAO.BookLibraryDAO;
+import ru.alex.spring.database.model.Book;
 
 import java.util.List;
 @Service
-public class BookService implements IService<Book>{
-    private final ILibruaryDAO<Book> iLibruaryDAO;
+public class BookService{
+    private final BookLibraryDAO iLibruaryDAO;
 
-    public BookService(@Qualifier("bookLibraryDAO") ILibruaryDAO iLibruaryDAO) {
-        this.iLibruaryDAO = iLibruaryDAO;
+    public BookService(BookLibraryDAO LibruaryDAO) {
+        this.iLibruaryDAO = LibruaryDAO;
     }
-    @Override
+
     public void save(Book newObject) {
         iLibruaryDAO.save(newObject);
     }
 
-    @Override
     public void update(Object data, Integer id, String actions) {
         iLibruaryDAO.update(data, id, actions);
     }
 
-
-
-   /* public void update(Book updateObject, Integer id) {
-        iLibruaryDAO.update(updateObject, id);
-    }
-*/
-    @Override
     public void delete(Integer id) {
         iLibruaryDAO.delete(id);
     }
 
-    @Override
+
     public Book showInfo(Integer id) {
         return  iLibruaryDAO.showInfo(id);
     }
 
-    @Override
     public List<Book> index() {
         return iLibruaryDAO.index();
     }

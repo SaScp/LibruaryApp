@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.alex.spring.database.service.IService;
-import ru.alex.spring.database.domin.Person;
+import ru.alex.spring.database.DAO.UserLibraryDAO;
+import ru.alex.spring.database.model.Person;
 import ru.alex.spring.unil.PersonValidator;
 
 import javax.validation.Valid;
@@ -13,9 +13,9 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-  private final IService<Person> personIService;
+  private final UserLibraryDAO personIService;
   private final PersonValidator personValidator;
-    public UserController(IService<Person> personIService, PersonValidator personValidator) {
+    public UserController(UserLibraryDAO personIService, PersonValidator personValidator) {
         this.personIService = personIService;
         this.personValidator = personValidator;
     }
