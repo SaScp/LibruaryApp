@@ -7,7 +7,7 @@
 <body>
 <h2>Книги</h2>
 <div th:each="book : ${books}">
-  <a th:href="@{/book/{id}(id=${book.getId()})}" th:text="${book.getName()}" ></a>
+  <a th:href="@{/book/{id}(id=${book.getId()})}" th:text="${book.getTitle()}" ></a>
 </div>
 <hr>
 <a href="/book/addBook">Добавить книгу</a>

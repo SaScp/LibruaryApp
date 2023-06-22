@@ -1,47 +1,58 @@
 package ru.alex.spring.database.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.alex.spring.database.DAO.ILibruaryDAO;
-import ru.alex.spring.database.domin.Book;
-import ru.alex.spring.database.domin.Person;
+import org.springframework.transaction.annotation.Transactional;
+import ru.alex.spring.database.model.Book;
+import ru.alex.spring.database.model.Person;
+import ru.alex.spring.database.repositorys.BookRepository;
+import ru.alex.spring.database.repositorys.PersonRepository;
 
 import java.util.List;
 @Service
-public class BookService implements IService<Book>{
-    private final ILibruaryDAO<Book> iLibruaryDAO;
+@Transactional(readOnly = true)
+public class BookService {
 
-    public BookService(@Qualifier("bookLibraryDAO") ILibruaryDAO iLibruaryDAO) {
-        this.iLibruaryDAO = iLibruaryDAO;
+    private final BookRepository bookRepository;
+    private final PersonRepository personRepository;
+    public BookService(BookRepository bookRepository, PersonRepository personRepository) {
+        this.bookRepository = bookRepository;
+        this.personRepository = personRepository;
     }
-    @Override
-    public void save(Book newObject) {
-        iLibruaryDAO.save(newObject);
+    @Transactional
+    public void save(Book book){
+        bookRepository.save(book);
     }
-
-    @Override
-    public void update(Object data, Integer id, String actions) {
-        iLibruaryDAO.update(data, id, actions);
-    }
-
-
-
-   /* public void update(Book updateObject, Integer id) {
-        iLibruaryDAO.update(updateObject, id);
-    }
-*/
-    @Override
-    public void delete(Integer id) {
-        iLibruaryDAO.delete(id);
+    @Transactional
+    public void delete(Integer id){
+        bookRepository.deleteById(id);
     }
 
-    @Override
-    public Book showInfo(Integer id) {
-        return  iLibruaryDAO.showInfo(id);
+    public List<Book> index(){
+        return bookRepository.findAll();
     }
 
-    @Override
-    public List<Book> index() {
-        return iLibruaryDAO.index();
+    public Book find(Integer id){
+        return bookRepository.findById(id).orElse(null);
     }
+
+    @Transactional
+    public void update(Integer id, Book book){
+        book.setId(id);
+        bookRepository.save(book);
+    }
+
+
+    @Transactional
+    public void updateOwner(Integer id, Person person, Book book){
+        book = bookRepository.findById(id).orElse(null);
+        book.setPerson(personRepository.findById(person.getId()).orElse(null));
+        bookRepository.save(book);
+    }
+    @Transactional
+    public void updateOnNull(Integer id, Book book){
+        book = bookRepository.findById(id).orElse(null);
+        book.setPerson(null);
+        bookRepository.save(book);
+    }
+
 }

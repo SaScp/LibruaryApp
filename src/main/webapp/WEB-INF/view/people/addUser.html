@@ -7,13 +7,14 @@
 <body>
 <h2>User Data</h2>
 <form method="post" th:action="@{/user/add}" th:object="${dataAboutUser}">
+
     <label for="name">Введите имя</label>
-    <input  type="text" th:field="*{name}" id="name">
+    <input  type="text" th:field="*{full_name}" id="name">
     <br>
-    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</div>
-    <Br>
+   <!-- <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{full_name}">error</div>
+    <Br>-->
     <label for="year_born">Введите год рождения</label>
-    <input  type="text" th:field="*{year_born}" id="year_born">
+    <input  type="text" th:field="*{yearOfBirth}" id="year_born">
     <Br>
     <button type="submit">Добавить</button>
 </form>

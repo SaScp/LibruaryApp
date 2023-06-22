@@ -5,18 +5,24 @@
     <title>info about user</title>
 </head>
 <body>
-<p th:text="${dataAboutUser.getName()}"/>
-<p th:text="${dataAboutUser.getYear_born()}"/>
-<p th:if="${dataAboutUser.getBooks().isEmpty()}">Этот человек пока не брал книги</p>
-<p th:each="book : ${dataAboutUser.getBooks()}" th:if="${!dataAboutUser.getBooks().isEmpty()}">
-    <a th:href="@{/book/{id}(id=${book.getId()})}"  th:text="${book.getName()}"/>
-</p>
 
-<form method="get" th:action="@{/user/{id}/editUser(id=${dataAboutUser.getId()})}">
+
+<p th:text="${User.getFull_name()}"/>
+
+<p th:text="${User.getYearOfBirth()}"/>
+
+
+<p th:each="book : ${User.getBooks()}" th:if="${User.getBooks()}">
+
+    <a th:href="@{/book/{id}(id=${book.getId()})}"  th:text="${book.getTitle()}"/>
+</p>
+<p th:unless="${User.getBooks()}">Этот человек пока не брал книги</p>
+
+<form method="get" th:action="@{/user/{id}/editUser(id=${User.getId()})}">
     <input type="submit" value="обновить">
 </form>
 
-<form th:method="DELETE" th:action="@{/user/{id}(id=${dataAboutUser.getId()})}">
+<form th:method="DELETE" th:action="@{/user/{id}(id=${User.getId()})}">
     <input type="submit" value="удалить"/>
 </form>
 </body>
