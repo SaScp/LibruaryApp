@@ -5,28 +5,31 @@
   <title>info about book</title>
 </head>
 <body>
-<h2 th:text="${dataAboutBook.getName()}"/>
+<h2 th:text="${dataAboutBook.getTitle()}"/>
 
 <p th:text="${dataAboutBook.getAutor()}"/>
 
-<p th:text="${dataAboutBook.getYear_relese()}"/>
+<p th:text="${dataAboutBook.getYear()}"/>
 
-<a th:if="${dataAboutBook.getUser_id()!=null}">
-  Эта книга занята
+
+
+<a th:if="${dataAboutBook.getPerson()}">
+  <a th:href="@{/user/{id}(id=${dataAboutBook.getPerson().getId()})}" th:text="${dataAboutBook.getPerson().getFull_name()}"/>
 </a>
 <a ></a>
-<form th:if="${dataAboutBook.getUser_id()!=null}" th:method="patch" th:action="@{/book/updateNull/{id}(id=${dataAboutBook.getId()})}">
+<form th:if="${dataAboutBook.getPerson()}" th:method="patch" th:action="@{/book/updateNull/{id}(id=${dataAboutBook.getId()})}">
     <button type="submit"> забрать книгу </button>
 </form>
-<a th:if="${dataAboutBook.getUser_id() == null}">
+<a th:unless="${dataAboutBook.getPerson()}">
   Эта книга свободна
 </a>
-<form th:if="${dataAboutBook.getUser_id() == null}" th:method="patch" th:action="@{/book/updateId/{id}(id=${dataAboutBook.getId()})}">
+
+<form th:unless="${dataAboutBook.getPerson()}" th:method="patch" th:action="@{/book/updateId/{id}(id=${dataAboutBook.getId()})}">
 
   <label for="person">выберите пользователя</label>
   <select th:object="${person}" th:field="*{id}" id="person">
 
-    <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getName()}"/>
+    <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFull_name()}"/>
 
   </select>
 

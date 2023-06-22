@@ -1,17 +1,24 @@
 package ru.alex.spring.database.model;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
+@Table(name = "person")
 public class Person {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "full_name")
     @NotEmpty(message = "Пожалуйста впешите имя!")
-    private String name;
-    private Integer year_born;
-
-    private List<Book> books = new ArrayList<>();
+    private String fullName;
+    @Column(name = "year_of_birth")
+    private Integer yearOfBirth;
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    private List<Book> books;
 
 
     public Integer getId() {
@@ -30,19 +37,29 @@ public class Person {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFull_name() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFull_name(String name) {
+        this.fullName = name;
     }
 
-    public Integer getYear_born() {
-        return year_born;
+    public Integer getYearOfBirth() {
+        return yearOfBirth;
     }
 
-    public void setYear_born(Integer year_born) {
-        this.year_born = year_born;
+    public void setYearOfBirth(Integer year_born) {
+        this.yearOfBirth = year_born;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", yearOfBirth=" + yearOfBirth +
+                ", books=" + books +
+                '}';
     }
 }

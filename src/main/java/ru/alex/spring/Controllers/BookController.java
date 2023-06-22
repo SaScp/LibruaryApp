@@ -3,24 +3,23 @@ package ru.alex.spring.Controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.alex.spring.database.DAO.BookLibraryDAO;
-import ru.alex.spring.database.DAO.UserLibraryDAO;
 import ru.alex.spring.database.model.Person;
 import ru.alex.spring.database.model.Book;
+import ru.alex.spring.database.service.BookService;
+import ru.alex.spring.database.service.PersonService;
 
 @Controller
 @RequestMapping("book")
 public class BookController {
-
-    private final BookLibraryDAO bookIService;
-    private final UserLibraryDAO userIService;
-    public BookController(BookLibraryDAO bookIService, UserLibraryDAO userIService) {
-        this.bookIService = bookIService;
-        this.userIService = userIService;
+    private final BookService bookService;
+    private final PersonService userService;
+    public BookController(BookService bookIService, PersonService userIService) {
+        this.bookService = bookIService;
+        this.userService = userIService;
     }
     @GetMapping("/books")
     public String indexBook(Model model) {
-        model.addAttribute("books", bookIService.index());
+        model.addAttribute("books", bookService.index());
         return "book/index";
     }
 
@@ -29,21 +28,23 @@ public class BookController {
                                     Model model,
                                     Model userModel,
                                     @ModelAttribute("person") Person person) {
-        model.addAttribute("dataAboutBook",bookIService.showInfo(id));
-        userModel.addAttribute("people", userIService.index());
+        model.addAttribute("dataAboutBook", bookService.find(id));
+        userModel.addAttribute("people", userService.index());
         return "book/show";
     }
 
     @PatchMapping("/updateId/{id}")
     public String updateAction(@PathVariable("id") Integer id,
-                               @ModelAttribute("person") Person person){
-        bookIService.update(person, id, "updateId");
+                               @ModelAttribute("person") Person person,
+                               @ModelAttribute("dataAboutBook") Book book){
+        bookService.updateOwner(id, person, book);
+        //обновляем на другого пользователя
         return "redirect:/book/{id}";
     }
     @PatchMapping("/updateNull/{id}")
-    public String updateNullAction(@PathVariable("id") Integer id,
-                                   @ModelAttribute("person") Person person) {
-        bookIService.update(person, id, "updateNull");
+    public String updateNullAction(@PathVariable("id") Integer id, @ModelAttribute("dataAboutBook") Book book) {
+        //обновляем на null
+        bookService.updateOnNull(id, book);
         return "redirect:/book/{id}";
     }
     @GetMapping("/addBook")
@@ -54,25 +55,24 @@ public class BookController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute("dataAboutBook") Book book) {
-        bookIService.save(book);
+        bookService.save(book);
         return "redirect:/book/books";
     }
     @GetMapping("/{id}/editUser")
     public String editUser(Model model,
                            @PathVariable("id") int id) {
-        model.addAttribute("dataAboutBook", bookIService.showInfo(id));
+        model.addAttribute("dataAboutBook", bookService.find(id));
         return "book/edit";
     }
     @PatchMapping("/{id}")
-    public String edit(@ModelAttribute("dataAboutBook") Book book,
-                       @PathVariable("id") int id) {
-        bookIService.update(book, id, "update");
+    public String edit(@PathVariable("id") Integer id, @ModelAttribute("dataAboutBook") Book book) {
+        bookService.update(id, book);
         return "redirect:/book/books";
     }
     @DeleteMapping("/{id}")
     public String deleteUser(@ModelAttribute("dataAboutBook") Book book,
                              @PathVariable("id") int id) {
-        bookIService.delete(id);
+        bookService.delete(id);
         return "redirect:/book/books";
     }
 }
