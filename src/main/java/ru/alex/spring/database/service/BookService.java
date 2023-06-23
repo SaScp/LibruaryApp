@@ -1,5 +1,7 @@
 package ru.alex.spring.database.service;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.alex.spring.database.model.Book;
@@ -27,10 +29,18 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
+    public List<Book> index(int page, int books_per_page){
+        return bookRepository.findAll(PageRequest.of(page, books_per_page)).getContent();
+    }
     public List<Book> index(){
         return bookRepository.findAll();
     }
-
+    public List<Book> indexWithSortedByYear(){
+        return bookRepository.findAll(Sort.by("year"));
+    }
+    public List<Book> indexWithAll(int page, int books_per_page){
+        return bookRepository.findAll(PageRequest.of(page, books_per_page, Sort.by("year"))).getContent();
+    }
     public Book find(Integer id){
         return bookRepository.findById(id).orElse(null);
     }

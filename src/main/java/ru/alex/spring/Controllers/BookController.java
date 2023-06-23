@@ -18,8 +18,26 @@ public class BookController {
         this.userService = userIService;
     }
     @GetMapping("/books")
-    public String indexBook(Model model) {
-        model.addAttribute("books", bookService.index());
+    public String indexBook(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                            @RequestParam(value = "books_per_page",defaultValue = "0") Integer books_per_page,
+                            @RequestParam(value = "sort_by_year", defaultValue = "false") Boolean sort_by_year,
+                            Model model) {
+        if(page != 0 && books_per_page!= 0)
+
+            model.addAttribute("books", bookService.index(page, books_per_page));
+
+        else if(sort_by_year.equals(true))
+
+            model.addAttribute("books", bookService.indexWithSortedByYear());
+
+        else if (page == 0 && books_per_page == 0 && sort_by_year.equals(true))
+
+            model.addAttribute("books", bookService.indexWithAll(page, books_per_page));
+
+        else
+
+            model.addAttribute("books", bookService.index());
+
         return "book/index";
     }
 
