@@ -1,6 +1,8 @@
 package ru.alex.spring.database.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "book")
@@ -10,8 +12,12 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column //(name = "name")
+    @NotNull(message = "это поле не должно быть пустым!")
+    @NotEmpty(message = "это поле не должно быть пустым!")
     private String title;
-    @Column //(name = "autor")
+    @Column (name = "autor")
+    @NotNull(message = "кинга без автора?! Шутишь?")
+    @NotEmpty(message = "кинга без автора?! Шутишь?")
     private String author;
     @Column //(name = "year_relese")
     private Integer year;

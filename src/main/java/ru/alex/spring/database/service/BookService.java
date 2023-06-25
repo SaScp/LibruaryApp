@@ -11,6 +11,8 @@ import ru.alex.spring.database.repositorys.PersonRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 public class BookService {
@@ -51,7 +53,6 @@ public class BookService {
         book.setId(id);
         bookRepository.save(book);
     }
-
     public List<Book> findBook(String title){
 
         return title.equals("")? null : bookRepository.findByTitleStartingWith(title);
@@ -69,4 +70,7 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    public Optional<Book> findByTitleBook(String title){
+        return bookRepository.findByTitle(title);
+    }
 }
