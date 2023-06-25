@@ -5,14 +5,23 @@
     <title>search book</title>
 </head>
 <body>
-<form th:method="get" th:sction="@{/book/search}" >
+<form th:method="get" th:sction="@{/book/search-book}">
     <label for="title">Введи названия</label>
-    <input type="text" id="title">
+    <input type="text" name="title" id="title">
     <input type="submit">
 </form>
-<hr>
-<div th:each="book : ${books}">
-    <p th:text="${book.getTitle()} + ' ' + ${book.getAutor()}"/>
+
+<div th:each="book : ${Book}" th:if="${!Book.isEmpty()}">
+    <p th:text="${book.getTitle()} + ',' + ${book.getAutor()} +',' + ${book.getYear()}"/>
+    <label th:if="${book.getPerson()}"for="user">Книга сейчас у </label>
+
+    <span th:if="${book.getPerson()}"th:text="${book.getPerson().getFull_name()}" id="user"/>
+    <p th:unless="${book.getPerson()}">Эта книга свобдна</p>
+    <hr>
+</div>
+<div th:unless="${!Book.isEmpty()}">
+    <p>Книг не найдено</p>
+    <hr>
 </div>
 </body>
 </html>

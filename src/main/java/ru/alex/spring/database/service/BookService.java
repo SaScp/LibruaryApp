@@ -9,6 +9,7 @@ import ru.alex.spring.database.model.Person;
 import ru.alex.spring.database.repositorys.BookRepository;
 import ru.alex.spring.database.repositorys.PersonRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional(readOnly = true)
@@ -52,7 +53,8 @@ public class BookService {
     }
 
     public List<Book> findBook(String title){
-        return bookRepository.findByTitleBefore(title);
+
+        return title.equals("")? null : bookRepository.findByTitleStartingWith(title);
     }
     @Transactional
     public void updateOwner(Integer id, Person person, Book book){

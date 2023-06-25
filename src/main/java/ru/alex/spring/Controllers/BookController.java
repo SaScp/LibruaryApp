@@ -15,7 +15,7 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final PersonService userService;
-    private String title;
+
     public BookController(BookService bookIService, PersonService userIService) {
         this.bookService = bookIService;
         this.userService = userIService;
@@ -98,13 +98,8 @@ public class BookController {
     }
 
     @GetMapping("search-book")
-    public String searchBook(Model model){
-        model.addAttribute("books", bookService.findBook(title));
+    public String searchBook(@RequestParam(value = "title", defaultValue = "") String title, Model model){
+        model.addAttribute("Book", bookService.findBook(title));
      return "book/search-book";
-    }
-    @PostMapping("search")
-    public String search(@ModelAttribute("title") String title, Model model){
-        this.title = title;
-        return "redirect:/search-book";
     }
 }

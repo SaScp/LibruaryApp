@@ -12,10 +12,10 @@ public class Person {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "name")
+    @Column (name = "full_name")
     @NotEmpty(message = "Пожалуйста впешите имя!")
     private String fullName;
-    @Column(name = "year_born")
+    @Column (name = "year_of_birth")
     private Integer yearOfBirth;
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
     private List<Book> books;
