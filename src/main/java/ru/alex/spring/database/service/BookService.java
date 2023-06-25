@@ -51,7 +51,9 @@ public class BookService {
         bookRepository.save(book);
     }
 
-
+    public List<Book> findBook(String title){
+        return bookRepository.findByTitleBefore(title);
+    }
     @Transactional
     public void updateOwner(Integer id, Person person, Book book){
         book = bookRepository.findById(id).orElse(null);

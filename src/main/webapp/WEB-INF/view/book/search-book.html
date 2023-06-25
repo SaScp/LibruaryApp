@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>search book</title>
+</head>
+<body>
+<form th:method="get" th:sction="@{/book/search}" >
+    <label for="title">Введи названия</label>
+    <input type="text" id="title">
+    <input type="submit">
+</form>
+<hr>
+<div th:each="book : ${books}">
+    <p th:text="${book.getTitle()} + ' ' + ${book.getAutor()}"/>
+</div>
+</body>
+</html>

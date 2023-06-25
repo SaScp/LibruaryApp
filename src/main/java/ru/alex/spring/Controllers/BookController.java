@@ -8,11 +8,14 @@ import ru.alex.spring.database.model.Book;
 import ru.alex.spring.database.service.BookService;
 import ru.alex.spring.database.service.PersonService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("book")
 public class BookController {
     private final BookService bookService;
     private final PersonService userService;
+    private String title;
     public BookController(BookService bookIService, PersonService userIService) {
         this.bookService = bookIService;
         this.userService = userIService;
@@ -92,5 +95,16 @@ public class BookController {
                              @PathVariable("id") int id) {
         bookService.delete(id);
         return "redirect:/book/books";
+    }
+
+    @GetMapping("search-book")
+    public String searchBook(Model model){
+        model.addAttribute("books", bookService.findBook(title));
+     return "book/search-book";
+    }
+    @PostMapping("search")
+    public String search(@ModelAttribute("title") String title, Model model){
+        this.title = title;
+        return "redirect:/search-book";
     }
 }
