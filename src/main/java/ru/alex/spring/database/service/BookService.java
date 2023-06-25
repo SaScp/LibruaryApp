@@ -1,5 +1,7 @@
 package ru.alex.spring.database.service;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.alex.spring.database.model.Book;
@@ -7,7 +9,10 @@ import ru.alex.spring.database.model.Person;
 import ru.alex.spring.database.repositorys.BookRepository;
 import ru.alex.spring.database.repositorys.PersonRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 public class BookService {
@@ -27,10 +32,18 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
+    public List<Book> index(int page, int books_per_page){
+        return bookRepository.findAll(PageRequest.of(page, books_per_page)).getContent();
+    }
     public List<Book> index(){
         return bookRepository.findAll();
     }
-
+    public List<Book> indexWithSortedByYear(){
+        return bookRepository.findAll(Sort.by("year"));
+    }
+    public List<Book> indexWithAll(int page, int books_per_page){
+        return bookRepository.findAll(PageRequest.of(page, books_per_page, Sort.by("year"))).getContent();
+    }
     public Book find(Integer id){
         return bookRepository.findById(id).orElse(null);
     }
@@ -40,8 +53,10 @@ public class BookService {
         book.setId(id);
         bookRepository.save(book);
     }
+    public List<Book> findBook(String title){
 
-
+        return title.equals("")? null : bookRepository.findByTitleStartingWith(title);
+    }
     @Transactional
     public void updateOwner(Integer id, Person person, Book book){
         book = bookRepository.findById(id).orElse(null);
@@ -55,4 +70,7 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    public Optional<Book> findByTitleBook(String title){
+        return bookRepository.findByTitle(title);
+    }
 }

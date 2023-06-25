@@ -6,11 +6,13 @@
 </head>
 <body>
 <form method="post" th:action="@{/book/add}" th:object="${dataAboutBook}">
-    <label for="name">Введите названия книги</label>
-    <input  type="text" th:field="*{title}" id="name">
+    <label for="title">Введите названия книги</label>
+    <input  type="text" th:field="*{title}" id="title">
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">error</div>
     <Br>
     <label for="autor">Введите имя автора</label>
     <input  type="text" th:field="*{autor}" id="autor">
+    <div style="color: red" th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}">error</div>
     <Br>
     <label for="year_relese">Введите год релиза</label>
     <input  type="text" th:field="*{year}" id="year_relese">
