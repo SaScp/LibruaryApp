@@ -9,14 +9,14 @@ public class Book {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+    @Column(name = "name")
     private String title;
-    @Column
+    @Column(name = "autor")
     private String author;
-    @Column
+    @Column(name = "year_relese")
     private Integer year;
     @ManyToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Person person;
     public Integer getId() {
         return id;

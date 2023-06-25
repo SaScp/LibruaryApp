@@ -8,18 +8,39 @@ import ru.alex.spring.database.model.Book;
 import ru.alex.spring.database.service.BookService;
 import ru.alex.spring.database.service.PersonService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("book")
 public class BookController {
     private final BookService bookService;
     private final PersonService userService;
+    private String title;
     public BookController(BookService bookIService, PersonService userIService) {
         this.bookService = bookIService;
         this.userService = userIService;
     }
     @GetMapping("/books")
-    public String indexBook(Model model) {
-        model.addAttribute("books", bookService.index());
+    public String indexBook(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                            @RequestParam(value = "books_per_page",defaultValue = "0") Integer books_per_page,
+                            @RequestParam(value = "sort_by_year", defaultValue = "false") Boolean sort_by_year,
+                            Model model) {
+        if(page != 0 && books_per_page!= 0)
+
+            model.addAttribute("books", bookService.index(page, books_per_page));
+
+        else if(sort_by_year.equals(true))
+
+            model.addAttribute("books", bookService.indexWithSortedByYear());
+
+        else if (page == 0 && books_per_page == 0 && sort_by_year.equals(true))
+
+            model.addAttribute("books", bookService.indexWithAll(page, books_per_page));
+
+        else
+
+            model.addAttribute("books", bookService.index());
+
         return "book/index";
     }
 
@@ -74,5 +95,16 @@ public class BookController {
                              @PathVariable("id") int id) {
         bookService.delete(id);
         return "redirect:/book/books";
+    }
+
+    @GetMapping("search-book")
+    public String searchBook(Model model){
+        model.addAttribute("books", bookService.findBook(title));
+     return "book/search-book";
+    }
+    @PostMapping("search")
+    public String search(@ModelAttribute("title") String title, Model model){
+        this.title = title;
+        return "redirect:/search-book";
     }
 }
