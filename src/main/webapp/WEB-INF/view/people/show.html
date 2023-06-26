@@ -13,8 +13,8 @@
 
 
 <p th:each="book : ${User.getBooks()}" th:if="${User.getBooks()}">
-
-    <a th:href="@{/book/{id}(id=${book.getId()})}"  th:text="${book.getTitle()}"/>
+    <a  th:if="${book.getReturnDate().getDate() == data.getDate()}" style="color: red" th:text="${book.getTitle()}"/>
+    <a  th:unless="${book.getReturnDate().getDate() == data.getDate()}"th:text="${book.getTitle()}"/>
 </p>
 <p th:unless="${User.getBooks()}">Этот человек пока не брал книги</p>
 

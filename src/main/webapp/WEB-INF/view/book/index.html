@@ -10,6 +10,9 @@
   <a  th:href="@{/book/{id}(id=${book.getId()})}" th:text="${book.getTitle()}" ></a>
 </div>
 <hr>
+<h3>Найти книгу</h3>
+<a href="/book/search-book">Найти книгу</a>
+<hr>
 <a href="/book/addBook">Добавить книгу</a>
 </body>
 </html>
