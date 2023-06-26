@@ -9,13 +9,15 @@ import ru.alex.spring.database.service.PersonService;
 import ru.alex.spring.unil.PersonValidator;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     private final PersonService personIService;
     private final PersonValidator personValidator;
-    public UserController(PersonService personIService, PersonValidator personValidator) {
+    public UserController(PersonService personIService,
+                          PersonValidator personValidator) {
         this.personIService = personIService;
         this.personValidator = personValidator;
     }
@@ -28,8 +30,10 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String ShowInfoAboutUser(@PathVariable("id") int id,
-                                    Model model) {
-        model.addAttribute("User",personIService.find(id));
+                                    Model model,
+                                    Model modelData) {
+        modelData.addAttribute("data", new Date());
+        model.addAttribute("User", personIService.find(id));
         return "people/show";
     }
 

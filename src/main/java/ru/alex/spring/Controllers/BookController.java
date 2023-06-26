@@ -60,12 +60,11 @@ public class BookController {
                                @ModelAttribute("person") Person person,
                                @ModelAttribute("dataAboutBook") Book book){
         bookService.updateOwner(id, person, book);
-        //обновляем на другого пользователя
         return "redirect:/book/{id}";
     }
     @PatchMapping("/updateNull/{id}")
-    public String updateNullAction(@PathVariable("id") Integer id, @ModelAttribute("dataAboutBook") Book book) {
-        //обновляем на null
+    public String updateNullAction(@PathVariable("id") Integer id,
+                                   @ModelAttribute("dataAboutBook") Book book) {
         bookService.updateOnNull(id, book);
         return "redirect:/book/{id}";
     }
@@ -76,8 +75,7 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("dataAboutBook")
-                          @Valid Book book,
+    public String add(@ModelAttribute("dataAboutBook") @Valid Book book,
                       BindingResult bindingResult) {
         bookValidator.validate(book, bindingResult);
         if(bindingResult.hasErrors()){
@@ -111,7 +109,8 @@ public class BookController {
     }
 
     @GetMapping("search-book")
-    public String searchBook(@RequestParam(value = "title", defaultValue = "") String title, Model model){
+    public String searchBook(@RequestParam(value = "title", defaultValue = "") String title,
+                             Model model){
         model.addAttribute("Book", bookService.findBook(title));
      return "book/search-book";
     }

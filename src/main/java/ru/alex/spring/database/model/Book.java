@@ -3,6 +3,7 @@ package ru.alex.spring.database.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "book")
@@ -21,6 +22,10 @@ public class Book {
     private String author;
     @Column //(name = "year_relese")
     private Integer year;
+    @Column(name = "date")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date returnDate;
+
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
@@ -63,4 +68,14 @@ public class Book {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(Date date) {
+        this.returnDate = date;
+    }
+
 }

@@ -40,21 +40,7 @@ public class SpringConfig implements WebMvcConfigurer {
         this.applicationContext = applicationContext;
         this.environment = environment;
     }
-    /*
-     * Create Table in PostgreSQL with param:
-     * ----------------------------------------------------------
-     * in book:
-     * id int(with auto increment),
-     * user_id int(fk with id in person and cascade -- (on delete set null)),
-     *  name varchar unique,
-     * autor varchar not null,
-     * year_relese not null
-     * --------------------------------------------------------
-     * in person:
-     * id int(with auto increment),
-     * name varchar not null unique,
-     * year_born not null
-     */
+
     @Bean
     DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -74,14 +60,6 @@ public class SpringConfig implements WebMvcConfigurer {
 
         return properties;
     }
-    /*     @Bean
-         public LocalSessionFactoryBean sessionFactory(){
-            LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-            sessionFactoryBean.setDataSource(dataSource());
-            sessionFactoryBean.setPackagesToScan("ru.alex.spring.database.model");
-            sessionFactoryBean.setHibernateProperties(properties());
-            return sessionFactoryBean;
-         }*/
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -106,13 +84,6 @@ public class SpringConfig implements WebMvcConfigurer {
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
-  /*  @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-
-        return transactionManager;
-    }*/
 
     @Bean
     public PlatformTransactionManager transactionManager() {
